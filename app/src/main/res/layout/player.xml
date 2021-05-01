@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/background" />
 
     <TextView
-        android:id="@+id/ArtistNameTextView"
+        android:id="@+id/artist_name_text_view"
         android:layout_width="328dp"
         android:layout_height="22dp"
         android:layout_marginStart="14dp"
@@ -27,13 +27,13 @@
         android:text="TextView"
         android:textAlignment="center"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/PauseButton"
+        app:layout_constraintBottom_toTopOf="@+id/pause_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="ArtistName" />
 
     <TextView
-        android:id="@+id/MusicNameTextView"
+        android:id="@+id/music_name_text_view"
         android:layout_width="324dp"
         android:layout_height="24dp"
         android:layout_marginStart="14dp"
@@ -42,13 +42,13 @@
         android:text="TextView"
         android:textAlignment="center"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/PauseButton"
+        app:layout_constraintBottom_toTopOf="@+id/pause_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="MusicName" />
 
     <ImageView
-        android:id="@+id/ArtworkView"
+        android:id="@+id/artwork_view"
         android:layout_width="278dp"
         android:layout_height="292dp"
         android:layout_marginStart="58dp"
@@ -60,7 +60,7 @@
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <Button
-        android:id="@+id/NextButton"
+        android:id="@+id/next_button"
         android:layout_width="52dp"
         android:layout_height="52dp"
         android:layout_marginEnd="90dp"
@@ -70,7 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/PrevButton"
+        android:id="@+id/prev_button"
         android:layout_width="52dp"
         android:layout_height="52dp"
         android:layout_marginStart="90dp"
@@ -80,7 +80,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/PauseButton"
+        android:id="@+id/pause_button"
         android:layout_width="52dp"
         android:layout_height="52dp"
         android:layout_marginStart="19dp"
@@ -88,11 +88,11 @@
         android:layout_marginBottom="50dp"
         android:background="@drawable/common_button_pause"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/NextButton"
-        app:layout_constraintStart_toEndOf="@+id/PrevButton" />
+        app:layout_constraintEnd_toStartOf="@+id/next_button"
+        app:layout_constraintStart_toEndOf="@+id/prev_button" />
 
     <Button
-        android:id="@+id/PlayButton"
+        android:id="@+id/play_button"
         android:layout_width="52dp"
         android:layout_height="52dp"
         android:layout_marginStart="19dp"
@@ -100,6 +100,6 @@
         android:layout_marginBottom="50dp"
         android:background="@drawable/common_button_play"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/NextButton"
-        app:layout_constraintStart_toEndOf="@+id/PrevButton" />
+        app:layout_constraintEnd_toStartOf="@+id/next_button"
+        app:layout_constraintStart_toEndOf="@+id/prev_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

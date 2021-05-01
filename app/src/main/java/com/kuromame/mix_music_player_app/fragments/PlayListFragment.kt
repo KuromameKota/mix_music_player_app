@@ -1,4 +1,4 @@
-package com.kuromame.mix_music_player_app
+package com.kuromame.mix_music_player_app.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.kuromame.mix_music_player_app.R
+import com.kuromame.mix_music_player_app.activities.IListener
 
 class PlayListFragment : Fragment(){
     private lateinit var testButton: Button
-    private lateinit var mListener: MyListener
+    private lateinit var listener: IListener
 
     companion object {
         fun instance () = PlayListFragment().apply {
@@ -28,15 +30,15 @@ class PlayListFragment : Fragment(){
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MyListener ) {
-            mListener = context as MyListener
+        if (context is IListener) {
+            listener = context as IListener
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        testButton = view.findViewById<Button>(R.id.TestButton)
+        testButton = view.findViewById<Button>(R.id.test_button)
         testButton.setOnClickListener {
-            mListener.onClickButton();
+            listener.onClickButton();
 
             val fragmentManager = fragmentManager;
 

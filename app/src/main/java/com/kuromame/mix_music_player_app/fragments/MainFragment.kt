@@ -1,14 +1,15 @@
-package com.kuromame.mix_music_player_app
+package com.kuromame.mix_music_player_app.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.kuromame.mix_music_player_app.adapters.CollectionAdapter
+import com.kuromame.mix_music_player_app.R
 
 class MainFragment : Fragment(){
     private lateinit var collectionAdapter: CollectionAdapter
@@ -24,10 +25,10 @@ class MainFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         collectionAdapter = CollectionAdapter(this)
-        viewPager = view.findViewById(R.id.Pager)
+        viewPager = view.findViewById(R.id.pager)
         viewPager.adapter = collectionAdapter
 
-        val tabLayout = view.findViewById<TabLayout>(R.id.TabLayout)
+        val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
                 0 -> {

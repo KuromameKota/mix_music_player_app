@@ -1,15 +1,24 @@
-package com.kuromame.mix_music_player_app
+package com.kuromame.mix_music_player_app.activities
 
+import android.content.Context
 import android.os.Bundle
-import android.widget.Toast
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.kuromame.mix_music_player_app.fragments.MainFragment
+import com.kuromame.mix_music_player_app.fragments.PlayerFragment
+import com.kuromame.mix_music_player_app.R
+import com.kuromame.mix_music_player_app.media.IMediaHelper
+import com.kuromame.mix_music_player_app.media.MediaHelper
+import com.kuromame.mix_music_player_app.media.Track
 
 
-interface MyListener {
+interface IListener {
     fun onClickButton()
+    fun scanTracks(): ArrayList<Track>
+    fun getContext(): Context
 }
 
-class MainActivity() : AppCompatActivity(), MyListener {
+class MainActivity() : AppCompatActivity(), IListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,5 +39,15 @@ class MainActivity() : AppCompatActivity(), MyListener {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.container, playerFragment)
         fragmentTransaction.commit()
+    }
+
+    override fun scanTracks(): ArrayList<Track> {
+        val mediaHelper = MediaHelper.instance(this)
+
+        return  mediaHelper.scanTracks()
+    }
+
+    override fun getContext(): Context {
+        return  this
     }
 }
