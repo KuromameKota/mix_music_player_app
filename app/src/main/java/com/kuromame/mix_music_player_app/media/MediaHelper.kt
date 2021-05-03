@@ -1,13 +1,20 @@
 package com.kuromame.mix_music_player_app.media
 
+import android.Manifest
+import android.content.ContentResolver
 import android.content.Context
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
-import android.os.Bundle
 import android.provider.MediaStore
-import com.kuromame.mix_music_player_app.fragments.MusicListFragment
+import android.widget.Button
 
-class MediaHelper constructor(private val context: Context) : IMediaHelper {
+class MediaHelper constructor(private val _context: Context) : IMediaHelper {
+    private var context: Context
+
+    init {
+        context = _context
+    }
 
     companion object {
         private var instance : MediaHelper? = null
@@ -20,22 +27,27 @@ class MediaHelper constructor(private val context: Context) : IMediaHelper {
         }
     }
 
+
+
     override fun scanTracks(): ArrayList<Track> {
         val array = ArrayList<Track>()
 
-        val uri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+        if (context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            println("scanTracks")
+
+            return array
+        }
+
+        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(
-            MediaStore.Audio.Media._ID,
-            MediaStore.Audio.Media.TITLE,
-            MediaStore.Audio.Media.ARTIST,
-            MediaStore.Audio.Media.DATA,
-            MediaStore.Audio.Media.DURATION,
-            MediaStore.Audio.Media.ALBUM_ID)
+                MediaStore.Audio.Media._ID,
+                MediaStore.Audio.Media.TITLE,
+                MediaStore.Audio.Media.ARTIST,
+                MediaStore.Audio.Media.DATA,
+                MediaStore.Audio.Media.DURATION,
+                MediaStore.Audio.Media.ALBUM_ID)
 
-        val selection = "${MediaStore.Audio.Media.IS_MUSIC}  != 0"
-        val sortOrder = "${MediaStore.Audio.AudioColumns.TITLE} COLLATE LOCALIZED ASC"
-
-        val cursor = context.contentResolver.query(uri, projection, selection, null, sortOrder)
+        val cursor = context.contentResolver.query(uri, projection, null, null, null)
 
         if(cursor != null) {
             cursor.moveToFirst()
@@ -46,7 +58,7 @@ class MediaHelper constructor(private val context: Context) : IMediaHelper {
                 val artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
                 val data = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA))
                 val duration = Track.convertDuration(cursor.getString(cursor.getColumnIndex(
-                    MediaStore.Audio.Media.DURATION)).toLong())
+                        MediaStore.Audio.Media.DURATION)).toLong())
                 val albumId = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)).toLong()
 
                 cursor.moveToNext()
@@ -66,10 +78,10 @@ class MediaHelper constructor(private val context: Context) : IMediaHelper {
         val uri: Uri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI
 
         val projection = arrayOf(
-            MediaStore.Audio.Albums._ID,
-            MediaStore.Audio.Albums.ALBUM,
-            MediaStore.Audio.Albums.ARTIST,
-            MediaStore.Audio.Albums.ALBUM_ART)
+                MediaStore.Audio.Albums._ID,
+                MediaStore.Audio.Albums.ALBUM,
+                MediaStore.Audio.Albums.ARTIST,
+                MediaStore.Audio.Albums.ALBUM_ART)
 
         val sortOrder = "${MediaStore.Audio.Media.ALBUM} ASC"
 
@@ -98,12 +110,12 @@ class MediaHelper constructor(private val context: Context) : IMediaHelper {
         val uri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
 
         val projection = arrayOf(
-            MediaStore.Audio.Media._ID,
-            MediaStore.Audio.Media.TITLE,
-            MediaStore.Audio.Media.ARTIST,
-            MediaStore.Audio.Media.DATA,
-            MediaStore.Audio.Media.DURATION,
-            MediaStore.Audio.Media.ALBUM_ID)
+                MediaStore.Audio.Media._ID,
+                MediaStore.Audio.Media.TITLE,
+                MediaStore.Audio.Media.ARTIST,
+                MediaStore.Audio.Media.DATA,
+                MediaStore.Audio.Media.DURATION,
+                MediaStore.Audio.Media.ALBUM_ID)
 
         val selection = "${MediaStore.Audio.Albums.ALBUM_ID} == $albumID"
 
@@ -119,7 +131,7 @@ class MediaHelper constructor(private val context: Context) : IMediaHelper {
                 val artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
                 val data = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA))
                 val duration = Track.convertDuration(cursor.getString(cursor.getColumnIndex(
-                    MediaStore.Audio.Media.DURATION)).toLong())
+                        MediaStore.Audio.Media.DURATION)).toLong())
                 val albumId = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)).toLong()
 
                 cursor.moveToNext()
@@ -139,10 +151,10 @@ class MediaHelper constructor(private val context: Context) : IMediaHelper {
         val uri: Uri = MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI
 
         val projection = arrayOf(
-            MediaStore.Audio.Artists._ID,
-            MediaStore.Audio.Artists.ARTIST,
-            MediaStore.Audio.Artists.NUMBER_OF_ALBUMS,
-            MediaStore.Audio.Artists.NUMBER_OF_TRACKS
+                MediaStore.Audio.Artists._ID,
+                MediaStore.Audio.Artists.ARTIST,
+                MediaStore.Audio.Artists.NUMBER_OF_ALBUMS,
+                MediaStore.Audio.Artists.NUMBER_OF_TRACKS
         )
 
         val sortOrder = "${MediaStore.Audio.Artists.ARTIST} ASC"
@@ -174,12 +186,12 @@ class MediaHelper constructor(private val context: Context) : IMediaHelper {
         val uri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
 
         val projection = arrayOf(
-            MediaStore.Audio.Media._ID,
-            MediaStore.Audio.Media.TITLE,
-            MediaStore.Audio.Media.ARTIST,
-            MediaStore.Audio.Media.DATA,
-            MediaStore.Audio.Media.DURATION,
-            MediaStore.Audio.Media.ALBUM_ID)
+                MediaStore.Audio.Media._ID,
+                MediaStore.Audio.Media.TITLE,
+                MediaStore.Audio.Media.ARTIST,
+                MediaStore.Audio.Media.DATA,
+                MediaStore.Audio.Media.DURATION,
+                MediaStore.Audio.Media.ALBUM_ID)
 
         val selection = "${MediaStore.Audio.Media.ARTIST_ID} == $artistID"
 
@@ -195,7 +207,7 @@ class MediaHelper constructor(private val context: Context) : IMediaHelper {
                 val artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
                 val data = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA))
                 val duration = Track.convertDuration(cursor.getString(cursor.getColumnIndex(
-                    MediaStore.Audio.Media.DURATION)).toLong())
+                        MediaStore.Audio.Media.DURATION)).toLong())
                 val albumId = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)).toLong()
 
                 cursor.moveToNext()
@@ -217,8 +229,8 @@ class MediaHelper constructor(private val context: Context) : IMediaHelper {
         val uri = MediaStore.Audio.Genres.EXTERNAL_CONTENT_URI
 
         val projection = arrayOf(
-            MediaStore.Audio.Genres._ID,
-            MediaStore.Audio.Genres.NAME
+                MediaStore.Audio.Genres._ID,
+                MediaStore.Audio.Genres.NAME
         )
 
         val sortOrder = "${MediaStore.Audio.Genres.NAME} ASC"
@@ -248,12 +260,12 @@ class MediaHelper constructor(private val context: Context) : IMediaHelper {
         val uri = android.provider.MediaStore.Audio.Genres.Members.getContentUri("external", genreID)
 
         val projection = arrayOf(
-            MediaStore.Audio.Media._ID,
-            MediaStore.Audio.Media.TITLE,
-            MediaStore.Audio.Media.ARTIST,
-            MediaStore.Audio.Media.DATA,
-            MediaStore.Audio.Media.DURATION,
-            MediaStore.Audio.Media.ALBUM_ID)
+                MediaStore.Audio.Media._ID,
+                MediaStore.Audio.Media.TITLE,
+                MediaStore.Audio.Media.ARTIST,
+                MediaStore.Audio.Media.DATA,
+                MediaStore.Audio.Media.DURATION,
+                MediaStore.Audio.Media.ALBUM_ID)
 
         val selection = "${MediaStore.Audio.Media.IS_MUSIC}  != 0"
 
@@ -269,7 +281,7 @@ class MediaHelper constructor(private val context: Context) : IMediaHelper {
                 val artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
                 val data = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA))
                 val duration = Track.convertDuration(cursor.getString(cursor.getColumnIndex(
-                    MediaStore.Audio.Media.DURATION)).toLong())
+                        MediaStore.Audio.Media.DURATION)).toLong())
                 val albumId = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)).toLong()
 
                 cursor.moveToNext()

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -38,24 +39,50 @@ class MusicListFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val tracks = listener.scanTracks();
-        val scrollView = view.findViewById<ScrollView>(R.id.scroll_view)
+        val scrollViewLayout = view.findViewById<LinearLayout>(R.id.scroll_view_layout)
+        println("MusicListFragment tracks.size")
 
-        for ( i in 0..tracks.size )
+        println(tracks.size)
+
+        for ( track in tracks )
         {
             val musicListLayout = layoutInflater.inflate(R.layout.music_list_layout, null)
-
-            val track = tracks[i]
+            if (musicListLayout == null)
+            {
+                println("music_list_layout is null")
+            }
 
             val titleText = musicListLayout.findViewById<TextView>(R.id.music_title_text)
-            titleText.text = track.title
+            if (titleText != null)
+            {
+                titleText.text = track.title
+            }
+            else
+            {
+                println("titleText is null")
+            }
 
-            val artistNameText = musicListLayout.findViewById<TextView>(R.id.artist_name_text_view)
-            artistNameText.text = track.artist
+            val artistNameText = musicListLayout.findViewById<TextView>(R.id.artist_text)
+            if (artistNameText != null)
+            {
+                artistNameText.text = track.artist
+            }
+            else
+            {
+                println("artistNameText is null")
+            }
 
             val durationText = musicListLayout.findViewById<TextView>(R.id.duration_text)
-            durationText.text = track.duration
+            if (durationText != null)
+            {
+                durationText.text = track.duration
+            }
+            else
+            {
+                println("durationText is null")
+            }
 
-            scrollView.addView(musicListLayout)
+            scrollViewLayout.addView(musicListLayout)
         }
     }
 }

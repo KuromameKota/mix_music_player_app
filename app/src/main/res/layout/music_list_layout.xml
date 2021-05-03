@@ -18,26 +18,24 @@
             android:id="@+id/music_title_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="MusicTitle" />
+            android:text="MusicTitle"
+            android:textColor="@color/white" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/artist_text"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Artist"
+            android:textColor="@color/white" />
 
-            <TextView
-                android:id="@+id/artist_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Artist" />
+        <TextView
+            android:id="@+id/duration_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Duration"
+            android:textColor="@color/white" />
 
-            <TextView
-                android:id="@+id/duration_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Duration" />
-        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
