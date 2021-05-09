@@ -1,13 +1,17 @@
 package com.kuromame.mix_music_player_app.media
 
 import android.Manifest
-import android.content.ContentResolver
 import android.content.Context
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
-import android.widget.Button
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.io.InputStream
+
 
 class MediaHelper constructor(private val _context: Context) : IMediaHelper {
     private var context: Context
@@ -311,5 +315,62 @@ class MediaHelper constructor(private val _context: Context) : IMediaHelper {
         }
 
         return albumPath
+    }
+
+    override fun loadItem(albumId: Long): Bitmap? {
+        val sArtworkUri = Uri.parse("content://media/external/audio/albumart")
+        val imageUri = Uri.withAppendedPath(sArtworkUri, albumId.toString())
+
+        var bitmap: Bitmap? = null
+        try {
+            bitmap = decodeSampledBitmapFromResource(imageUri, 64, 64)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return bitmap
+    }
+
+    private fun decodeSampledBitmapFromResource(imageUri: Uri, reqWidth: Int, reqHeight: Int): Bitmap? {
+        var inputStream: InputStream ? = null
+        return try {
+            inputStream = context.contentResolver.openInputStream(imageUri)
+            val options = BitmapFactory.Options()
+            options.inJustDecodeBounds = true
+            BitmapFactory.decodeStream(inputStream, null, options)
+            options.inSampleSize = calculateInSampleSize(options, reqWidth,
+                    reqHeight)
+            options.inJustDecodeBounds = false
+            inputStream = context.contentResolver.openInputStream(imageUri)
+            BitmapFactory.decodeStream(inputStream, null, options)
+        } catch (e: FileNotFoundException) {
+            //     e.printStackTrace();
+            null
+        } finally {
+            try {
+                inputStream?.close()
+            } catch (e: IOException) {
+                //      e.printStackTrace();
+            }
+        }
+    }
+
+    fun calculateInSampleSize(
+            options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+        // Raw height and width of image
+        val height = options.outHeight
+        val width = options.outWidth
+        var inSampleSize = 1
+        if (height > reqHeight || width > reqWidth) {
+            val halfHeight = height / 2
+            val halfWidth = width / 2
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while (halfHeight / inSampleSize >= reqHeight
+                    && halfWidth / inSampleSize >= reqWidth) {
+                inSampleSize *= 2
+            }
+        }
+        return inSampleSize
     }
 }

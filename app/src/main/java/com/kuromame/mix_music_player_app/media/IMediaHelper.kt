@@ -1,5 +1,7 @@
 package com.kuromame.mix_music_player_app.media
 
+import android.graphics.Bitmap
+
 interface IMediaHelper {
     fun scanTracks(): ArrayList<Track>
 
@@ -12,4 +14,5 @@ interface IMediaHelper {
 
     fun scanGenres(): ArrayList<Genre>
     fun scanGenreTracks(genreID: Long): ArrayList<Track>
+    fun loadItem(albumId: Long): Bitmap?
 }

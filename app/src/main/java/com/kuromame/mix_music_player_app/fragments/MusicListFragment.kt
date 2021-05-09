@@ -1,10 +1,12 @@
 package com.kuromame.mix_music_player_app.fragments
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -50,6 +52,21 @@ class MusicListFragment : Fragment(){
             if (musicListLayout == null)
             {
                 println("music_list_layout is null")
+            }
+            val imageView = musicListLayout.findViewById<ImageView>(R.id.album_image_view)
+            if (imageView != null)
+            {
+                val bitmap = listener.getAlbumImage(track.albumId)
+
+                if (bitmap != null)
+                {
+                    imageView.setImageBitmap(bitmap)
+                    println("set image")
+                }
+                else
+                {
+                    println("no image")
+                }
             }
 
             val titleText = musicListLayout.findViewById<TextView>(R.id.music_title_text)

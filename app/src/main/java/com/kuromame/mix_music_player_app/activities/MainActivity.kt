@@ -3,6 +3,7 @@ package com.kuromame.mix_music_player_app.activities
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
@@ -21,6 +22,7 @@ import java.io.File
 interface IListener {
     fun onClickButton()
     fun scanTracks(): ArrayList<Track>
+    fun getAlbumImage(albumID: Long): Bitmap?
     fun getContext(): Context
 }
 
@@ -56,6 +58,14 @@ class MainActivity() : AppCompatActivity(), IListener {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.container, playerFragment)
         fragmentTransaction.commit()
+    }
+
+    override fun getAlbumImage(albumId: Long): Bitmap? {
+        val mediaHelper = MediaHelper.instance(this)
+
+        val bitMap = mediaHelper.loadItem(albumId) ?: return null
+
+        return bitMap
     }
 
     override fun scanTracks(): ArrayList<Track> {
