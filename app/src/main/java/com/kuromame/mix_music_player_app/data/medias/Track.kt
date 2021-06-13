@@ -1,4 +1,4 @@
-package com.kuromame.mix_music_player_app.media
+package com.kuromame.mix_music_player_app.data.medias
 
 import java.io.Serializable
 

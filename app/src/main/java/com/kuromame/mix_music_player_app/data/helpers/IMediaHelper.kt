@@ -1,6 +1,10 @@
-package com.kuromame.mix_music_player_app.media
+package com.kuromame.mix_music_player_app.data.helpers
 
 import android.graphics.Bitmap
+import com.kuromame.mix_music_player_app.data.medias.Album
+import com.kuromame.mix_music_player_app.data.medias.Artist
+import com.kuromame.mix_music_player_app.data.medias.Genre
+import com.kuromame.mix_music_player_app.data.medias.Track
 
 interface IMediaHelper {
     fun scanTracks(): ArrayList<Track>

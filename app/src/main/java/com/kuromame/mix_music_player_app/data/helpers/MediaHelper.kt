@@ -1,4 +1,4 @@
-package com.kuromame.mix_music_player_app.media
+package com.kuromame.mix_music_player_app.data.helpers
 
 import android.Manifest
 import android.content.Context
@@ -8,6 +8,10 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
+import com.kuromame.mix_music_player_app.data.medias.Album
+import com.kuromame.mix_music_player_app.data.medias.Artist
+import com.kuromame.mix_music_player_app.data.medias.Genre
+import com.kuromame.mix_music_player_app.data.medias.Track
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStream
