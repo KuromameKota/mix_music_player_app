@@ -12,6 +12,11 @@ class MusicListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.music_list)
 
+        val musicListFragment = supportFragmentManager.findFragmentById(R.id.music_list)
+            as MusicListFragment? ?: MusicListFragment.newInstance().also {
+        }
+
+        musicListPresenter = MusicListPresenter(musicListFragment, false);
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

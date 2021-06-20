@@ -19,4 +19,8 @@ class MusicListFragment : Fragment(), MusicListContract.View {
     override fun showMusicList(){
 
     }
+
+    companion object {
+        fun newInstance() = MusicListFragment()
+    }
 }
